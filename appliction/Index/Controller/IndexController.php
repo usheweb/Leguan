@@ -19,7 +19,7 @@ class IndexController extends Controller
 		$table = 'article';
 		
 		$condition = array('click' => array('>',5,'or'),'id'=>array('in',array(1,3,5)));
-		$article = $this->Db->table($table)->where($condition)->field('id,title')->select();
+		$article = $this->Sql->table($table)->where($condition)->field('id,title')->select();
 
 		$view = $this->view;
 		$view->assign('author', 'ushe');
