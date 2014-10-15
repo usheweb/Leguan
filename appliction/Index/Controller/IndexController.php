@@ -84,4 +84,9 @@ class IndexController extends Controller
 		$upload = new \Usheweb\Upload\Upload();
 		$this->debug->dump($upload->run());
 	}
+
+	public function logAction()
+	{
+		$this->log->write('test log');
+	}
 }
