@@ -30,6 +30,6 @@ class Sql
 
 	public function __call($name, $arguments)
 	{
-		return $this->_obj->$name(implode(',', $arguments));
+		return call_user_func_array(array($this->_obj, $name), $arguments);
 	}
 }

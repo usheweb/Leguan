@@ -49,5 +49,9 @@
  		//上传文件扩展名
  		'fileExtension' => array('txt', 'html', 'htm', 'jpg', 'png', 'gif', 'bmp', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'zip', 'rar'),
  		//上传文件最大尺寸 1024 * 1024 * 10 = 10M
- 		'fileMaxSize' => 1024 * 1024 * 10
+ 		'fileMaxSize' => 1024 * 1024 * 10,
+ 		//数据库引擎
+ 		'dbEngine' => 'mysql',
+ 		//视图引擎
+ 		'viewEngine' => 'Leguan'
  	);

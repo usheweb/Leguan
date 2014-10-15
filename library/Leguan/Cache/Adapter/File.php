@@ -26,7 +26,7 @@ class File implements ICache
 	public function read($name)
 	{
 		$path = Leguan::get('path');
-		$fileName = $path->cache . $path->ds . "{$name}.php";
+		$fileName = $path->dataCache . $path->ds . "{$name}.php";
 		
 		if(file_exists($fileName)){
 			$content = require $fileName;
@@ -50,7 +50,12 @@ class File implements ICache
 	public function write($name, $value)
 	{
 		$path = Leguan::get('path');
-		$fileName = $path->cache . $path->ds . "{$name}.php";
+		$fileName = $path->dataCache . $path->ds . "{$name}.php";
+
+		if(!file_exists($path->dataCache) && 
+			   !mkdir($path->dataCache, 0, true)){
+				    die('创建目录失败 {$cacheDir}');
+		}
 
 		$data = "<?php
 		return '".serialize($value)."';";

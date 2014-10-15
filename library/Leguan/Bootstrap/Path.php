@@ -36,11 +36,10 @@ class Path
 		$this->_path['view'] = $this->_path['root'] . $this->_path['ds'] . 'themes';
 		$this->_path['upload'] = $this->_path['root'] . $this->_path['ds'] . 'uploads';
 
-		$this->_path['cache'] = $this->_path['data'] . $this->_path['ds'] . 'cache';
+		$this->_path['dataCache'] = $this->_path['data'] . $this->_path['ds'] . 'dataCache';
 		$this->_path['log'] = $this->_path['data'] . $this->_path['ds'] . 'log';
-
-		$this->_path['html'] = $this->_path['cache'] . $this->_path['ds'] . 'html';
-		$this->_path['data'] = $this->_path['cache'] . $this->_path['ds'] . 'data';
+		$this->_path['htmlCache'] = $this->_path['data'] . $this->_path['ds'] . 'htmlCache';
+		$this->_path['viewCache'] = $this->_path['data'] . $this->_path['ds'] . 'viewCache';
 
 		$this->_path['appCommon'] = $this->_path['app'] . $this->_path['ds'] . 'Common';
 		$this->_path['appConfig'] = $this->_path['appCommon'] . $this->_path['ds'] . 'Config';
