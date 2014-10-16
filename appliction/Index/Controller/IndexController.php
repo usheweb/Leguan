@@ -124,4 +124,13 @@ class IndexController extends Controller
 	{
 		$this->debug->dump($_SERVER);
 	}
+
+	public function securityAction()
+	{
+		$html = "<div onclick='alert(0)'>test xss</div>";
+		
+		echo $this->security->htmlEscape($html);
+		echo $this->security->removeXss($html);
+		echo $html;
+	}
 }
