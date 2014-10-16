@@ -9,6 +9,11 @@
 
 namespace Leguan\Request;
 
+use \Leguan\Bootstrap\Leguan;
+
+/**
+ * http请求类
+ */
 class Request
 {
 	/**
@@ -16,7 +21,7 @@ class Request
 	 */
 	public function isPost()
 	{
-		return $_SERVER['REQUEST_METHOD'] == 'POST';
+		return $this->getRequestMethod() == 'POST';
 	}
 
 	/**
@@ -24,7 +29,7 @@ class Request
 	 */
 	public function isGet()
 	{
-		return $_SERVER['REQUEST_METHOD'] == 'GET';
+		return $this->getRequestMethod() == 'GET';
 	}
 
 	/**
@@ -32,7 +37,7 @@ class Request
 	 */
 	public function isPut()
 	{
-		return $_SERVER['REQUEST_METHOD'] == 'PUT';
+		return $this->getRequestMethod() == 'PUT';
 	}
 
 	/**
@@ -40,7 +45,15 @@ class Request
 	 */
 	public function isDelete()
 	{
-		return $_SERVER['REQUEST_METHOD'] == 'DELETE';
+		return $this->getRequestMethod() == 'DELETE';
+	}
+
+	/**
+	 * 获取请求类型
+	 */
+	public function getRequestMethod()
+	{
+		return $_SERVER['REQUEST_METHOD'];
 	}
 
 	/**
@@ -77,6 +90,7 @@ class Request
 
 	/**
 	 * 获取客户端IP地址
+	 * @link http://thinkphp.cn/
 	 *
 	 * @param integer $type 返回类型 0 返回IP地址 1 返回IPV4地址数字
 	 * @param boolean $adv 是否进行高级模式获取（有可能被伪装） 
@@ -139,6 +153,8 @@ class Request
 
 	/**
 	 * 判断是否SSL协议
+	 * @link http://thinkphp.cn
+	 *
 	 * @return boolean
 	 */
 	function isSsl() 
@@ -150,5 +166,115 @@ class Request
 	        return true;
 	    }
 	    return false;
+	}
+
+	/**
+	 * 获取get请求数据
+	 *
+	 * @param $name string
+	 * @return mixed
+	 */
+	public function get($name)
+	{
+		$url = Leguan::get('url');
+
+		return $url->$name;
+	}
+
+	/**
+	 * 获取post请求数据
+	 *
+	 * @param $name string
+	 * @return mixed
+	 */
+	public function post($name)
+	{
+		if(isset($_POST[$name]))
+		{
+			return $_POST[$name];
+		}
+
+		return null;
+	}
+
+	/**
+	 * 获取server请求数据
+	 *
+	 * @param $name string
+	 * @return mixed
+	 */
+	public function server($name)
+	{
+		if(isset($_SERVER[$name]))
+		{
+			return $_SERVER[$name];
+		}
+
+		return null;
+	}
+
+	/**
+	 * 判断是否为搜索引擎蜘蛛
+	 *
+	 *  @author    Eddy
+	 *  @return    bool
+	 */
+	function isSpider() {
+        $agent= strtolower($_SERVER['HTTP_USER_AGENT']);  
+        if (!empty($agent)) {                 
+                $spiderSite= array(
+                        "TencentTraveler",
+                        "Baiduspider+",
+                        "BaiduGame",
+                        "Googlebot",
+                        "msnbot",
+                        "Sosospider+",
+                        "Sogou web spider",
+                        "ia_archiver",
+                        "Yahoo! Slurp",
+                        "YoudaoBot",
+                        "Yahoo Slurp",
+                        "MSNBot",
+                        "Java (Often spam bot)",
+                        "BaiDuSpider",
+                        "Voila",
+                        "Yandex bot",
+                        "BSpider",
+                        "twiceler",
+                        "Sogou Spider",
+                        "Speedy Spider",
+                        "Google AdSense",
+                        "Heritrix",
+                        "Python-urllib",
+                        "Alexa (IA Archiver)",
+                        "Ask",
+                        "Exabot",
+                        "Custo",
+                        "OutfoxBot/YodaoBot",
+                        "yacy",
+                        "SurveyBot",
+                        "legs",
+                        "lwp-trivial",
+                        "Nutch",
+                        "StackRambler",
+                        "The web archive (IA Archiver)",
+                        "Perl tool",
+                        "MJ12bot",
+                        "Netcraft",
+                        "MSIECrawler",
+                        "WGet tools",
+                        "larbin",
+                        "Fish search",
+                );   
+
+                foreach($spiderSite as $val) {                        
+                        $str = strtolower($val);
+                        if (strpos($agent, $str) !== false) {
+                                return true;
+                        }                        
+                }  
+        }
+
+        return false;
 	}
 }

@@ -89,4 +89,16 @@ class IndexController extends Controller
 	{
 		$this->log->write('test log');
 	}
+
+	public function reqAction()
+	{
+		$request = $this->request;
+		$debug = $this->debug;
+
+		$debug->dump($request->isGet());
+		$debug->dump($request->isMobile());
+		$debug->dump($request->isSpider());
+		$debug->dump($request->getDomain());
+		$debug->dump($request->getClientIp());
+	}
 }
