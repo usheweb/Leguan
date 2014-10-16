@@ -29,10 +29,12 @@ class IndexController extends Controller
 		$view->list = array('apple','pear','orange');
 		$view->display();
 		echo "<br>";
-		echo $this->Debug->execTime();
+		echo $this->Debug->appMsg();
+		echo "<br>";
+		echo $this->Debug->getQueryNum();
 	}
 
-	public function dbAction()
+	public function sql2Action()
 	{
 		$values = array("title"=>"new 'title",'description' => 'test');
 		$table = 'article';
@@ -43,6 +45,17 @@ class IndexController extends Controller
 				$this->Sql->table($table)->where(
 			array('click' => array('>',5,'or'),'id'=>array('in',array(1,3,5))))->field('id,title')->select()
 			);
+		$this->Debug->dump(
+				$this->Sql->table($table)->where(
+			array('click' => array('>',5,'or'),'id'=>array('in',array(1,3,5))))->field('id,title')->getRow()
+			);
+		$this->Debug->dump(
+				$this->Sql->table($table)->where(
+			array('click' => array('>',5,'or'),'id'=>array('in',array(1,3,5))))->field('id,title')->getOne()
+			);
+
+		echo "<br>";
+		echo $this->Debug->appMsg();
 	}
 
 	public function chapterAction()
@@ -100,5 +113,15 @@ class IndexController extends Controller
 		$debug->dump($request->isSpider());
 		$debug->dump($request->getDomain());
 		$debug->dump($request->getClientIp());
+		$debug->dump($request->get());
+		$debug->dump($request->post());
+
+		echo "<br>";
+		echo $this->Debug->appMsg();
+	}
+
+	public function serverAction()
+	{
+		$this->debug->dump($_SERVER);
 	}
 }

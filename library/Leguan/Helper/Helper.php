@@ -57,4 +57,5 @@
  		$format = implode($glue, $format);
  		return date($format);
  	}
+ 	
  }

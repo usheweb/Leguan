@@ -60,9 +60,19 @@ class Url
 	 *
 	 * @return array
 	 */
-	public function getUrlArr()
+	public function getUrlAll()
 	{
 		return $this->_url;
+	}
+
+	/**
+	 * 设置url
+	 *
+	 * @return array
+	 */
+	public function setUrlAll($arr)
+	{
+		$this->_url = $arr;
 	}
 
 	/**

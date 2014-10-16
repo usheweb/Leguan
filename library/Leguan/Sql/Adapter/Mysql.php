@@ -113,11 +113,13 @@ use Leguan\Bootstrap\Leguan;
  	{
  		$sql = "insert into ". $this->_save() . ";";
 
+ 		$result = $sql;
  		if ($isQuery) {
- 			return $this->_db->query($sql, $this->_input);
+ 			$result = $this->_db->query($sql, $this->_input);
  		}
+ 		$this->_init();
 
- 		return $sql;
+ 		return $result;
  	}
 
  	/**
@@ -167,11 +169,13 @@ use Leguan\Bootstrap\Leguan;
  	{
  		$sql = "delete @_{$this->_table} where ".$this->_where().";";
 
+ 		$result = $sql;
  		if ($isQuery) {
- 			return $this->_db->query($sql, $this->_input);
+ 			$result = $this->_db->query($sql, $this->_input);
  		}
+ 		$this->_init();
 
- 		return $sql;
+ 		return $result;
  	}
 
  	/**
@@ -194,17 +198,54 @@ use Leguan\Bootstrap\Leguan;
  	{
  		$sql = "update " . $this->_save() . " where " . $this->_where() .";";
 
+ 		$result = $sql;
  		if ($isQuery) {
- 			return $this->_db->query($sql, $this->_input);
+ 			$result = $this->_db->query($sql, $this->_input);
+ 		}
+ 		$this->_init();
+
+ 		return $result;
+ 	}
+
+ 	/**
+ 	 * 获取结果集中的一行记录
+ 	 */
+ 	public function getRow()
+ 	{
+ 		$sql = $this->select(false, false);
+ 		$sql = rtrim($sql, ';');
+ 		$sql .= " limit 1;";
+ 		$result = $this->_db->query($sql, $this->_input);
+ 		$this->_init();
+ 		
+ 		if (!empty($result)) {
+ 			return $result[0];
  		}
 
- 		return $sql;
+ 		return null;
+ 	}
+
+ 	/**
+ 	 * 获取结果集中的一行记录第一个数据
+ 	 */
+ 	public function getOne()
+ 	{
+ 		$result = $this->getRow();
+ 			
+ 		if (!empty($result)) {
+ 			return current($result);
+ 		}
+
+ 		return null;
  	}
 
  	/**
  	 * 获取查询数据的sql
+ 	 *
+ 	 * @param $isQuery bool 是否执行sql
+ 	 * @return mixed
  	 */
- 	public function select($isQuery = true)
+ 	public function select($isQuery = true, $isInit = true)
  	{
  		$fields = '';
  		if (empty($this->_field)) {
@@ -225,11 +266,16 @@ use Leguan\Bootstrap\Leguan;
  		}
  		$sql = "{$sql};";
 
+ 		$result = $sql;
  		if ($isQuery) {
- 			return $this->_db->query($sql, $this->_input);
+ 			$result = $this->_db->query($sql, $this->_input);
+ 		}
+ 		
+ 		if ($isInit) {
+ 			$this->_init();
  		}
 
- 		return $sql;
+ 		return $result;
  	}
 
  	/**

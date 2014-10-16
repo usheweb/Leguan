@@ -53,5 +53,7 @@
  		//数据库引擎
  		'dbEngine' => 'mysql',
  		//视图引擎
- 		'viewEngine' => 'Leguan'
+ 		'viewEngine' => 'Leguan',
+ 		//模拟gpc
+ 		'gpc' => true
  	);

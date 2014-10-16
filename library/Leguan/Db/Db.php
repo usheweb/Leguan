@@ -20,6 +20,7 @@ class Db
 	private static $_db = null;
 	private static $_dbCharset = 'utf8';
 	private static $_dbPrefix = '';
+	private static $_queryNum = 0;
 
 	private $stmt = null;
 
@@ -78,6 +79,8 @@ class Db
 			return false;
 		}
 
+		self::$_queryNum ++;
+		
 		return $this->_fetchAll();
 	}
 
@@ -97,6 +100,14 @@ class Db
 	private function _fetchAll($style = \PDO::FETCH_ASSOC)
 	{
 		return $this->_stmt->fetchAll($style);
+	}
+
+	/**
+	 * 获取数据库查询次数
+	 */
+	public function getQueryNum()
+	{
+		return self::$_queryNum;
 	}
 
 }

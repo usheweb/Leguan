@@ -25,6 +25,8 @@ class Start
 	{
 		//记录开始时间
 		define('APP_START_TIME', microtime(true));
+		//记录开始内存
+		define('APP_START_MEMORY', memory_get_usage());
 		//leguan版本信息
 		define('LEGUAN_VERSION', '0.1.0');
 
@@ -61,9 +63,30 @@ class Start
 
 		$config->isDebug ? error_reporting(E_ALL) : error_reporting(0);
 		date_default_timezone_set($config->timezone);
-		header("Content-Type:text/html;charset={$config->charset}");
-
+		
+		$response = Leguan::get('response');
+		$response->setCharset($config->charset);
+		$response->gzip();
 		Leguan::get('url')->setCleanKey($config->urlCleanKey);
+
+		//模拟gpc
+		if ($config->gpc && !get_magic_quotes_gpc()) {
+			$security = Leguan::get('security');
+
+		    if (!empty($_GET)) {
+		        $_GET  = $security->addslashesDeep($_GET);
+		    }
+		    if (!empty($_POST)) {
+		        $_POST = $security->addslashesDeep($_POST);
+		    }
+		    //转义pathinfo
+		    if (!empty($_SERVER['PATH_INFO'])) {
+		    	$_SERVER['PATH_INFO'] = $security->addslashesDeep($_SERVER['PATH_INFO']);
+		    }
+
+		    $_COOKIE   = $security->addslashesDeep($_COOKIE);
+		    $_REQUEST  = $security->addslashesDeep($_REQUEST);
+		}
 	}
 
 	/**

@@ -174,9 +174,13 @@ class Request
 	 * @param $name string
 	 * @return mixed
 	 */
-	public function get($name)
+	public function get($name = null)
 	{
 		$url = Leguan::get('url');
+
+		if (empty($name)) {
+			return $url->getUrlAll();
+		}
 
 		return $url->$name;
 	}
@@ -187,8 +191,12 @@ class Request
 	 * @param $name string
 	 * @return mixed
 	 */
-	public function post($name)
+	public function post($name = null)
 	{
+		if (empty($name)) {
+			return $_POST;
+		}
+
 		if(isset($_POST[$name]))
 		{
 			return $_POST[$name];
@@ -203,8 +211,12 @@ class Request
 	 * @param $name string
 	 * @return mixed
 	 */
-	public function server($name)
+	public function server($name = null)
 	{
+		if (empty($name)) {
+			return $_SERVER;
+		}
+
 		if(isset($_SERVER[$name]))
 		{
 			return $_SERVER[$name];
@@ -219,7 +231,8 @@ class Request
 	 *  @author    Eddy
 	 *  @return    bool
 	 */
-	function isSpider() {
+	function isSpider() 
+	{
         $agent= strtolower($_SERVER['HTTP_USER_AGENT']);  
         if (!empty($agent)) {                 
                 $spiderSite= array(
@@ -271,8 +284,8 @@ class Request
                         $str = strtolower($val);
                         if (strpos($agent, $str) !== false) {
                                 return true;
-                        }                        
-                }  
+                        }                     
+                }
         }
 
         return false;
