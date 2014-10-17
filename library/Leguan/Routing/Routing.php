@@ -65,27 +65,17 @@ class Routing
 			$session->start();
 		}
 
-		//执行应用级别初始化代码
-		$initFile = array($path->app, 'Main.php');
-		$initFile = implode($path->ds, $initFile);
-		if (file_exists($initFile)) {
-			require $initFile;
-			$init = new \App\Main();
+		//执行应用级别和模块级别初始化代码
+		$init = array('Common', $url->m);
+		foreach ($init as $value) {
+			$init = "\\{$value}\\Main";
+			$init = new $init();
+			
 			if ($init->run() === false) {
 				exit;
 			}
 		}
 
-		//执行模块级别初始化代码
-		$initFile = array($path->app, $url->m, 'Main.php');
-		$initFile = implode($path->ds, $initFile);
-		if (file_exists($initFile)) {
-			require $initFile;
-			$init = new \App\Moudle\Main();
-			if ($init->run() === false) {
-				exit;
-			}
-		}
 		//加载控制器
 		$controllerName = "\\{$url->m}\\Controller\\{$url->c}Controller";
 

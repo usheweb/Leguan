@@ -9,6 +9,8 @@
 
  namespace Leguan\Helper;
 
+use Leguan\Bootstrap\Leguan;
+
  /**
   * 辅助类
   */
@@ -56,6 +58,30 @@
  		$format = array('H', 'i', 's');
  		$format = implode($glue, $format);
  		return date($format);
+ 	}
+
+ 	/**
+ 	 * 加载应用级别和模块级别帮助文件
+ 	 */
+ 	public function __call($name, $arguments)
+ 	{
+ 		static $obj = array();
+
+ 		$url = Leguan::get('url');
+ 		$helper = array('Common', $url->m);
+
+ 		foreach ($helper as $value) {
+ 			$helper = "\\{$value}\\Helper\\Helper";
+	 		if (!isset($obj[$helper])) {
+	 			$obj[$helper] = new $helper();
+	 		}
+
+	 		if (is_callable(array($obj[$helper], $name))) {
+	 			return call_user_func_array(array($obj[$helper], $name), $arguments);
+	 		}
+ 		}
+
+ 		return null;
  	}
  	
  }

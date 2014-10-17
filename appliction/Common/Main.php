@@ -7,13 +7,13 @@
  * @license   http://www.apache.org/licenses/LICENSE-2.0
  */
 
-namespace Index;
+namespace Common;
 
 class Main
 {
 	public function run()
 	{
-		echo "moudle run <br>";
+		echo "app run <br>";
 
 		// return false;
 	}

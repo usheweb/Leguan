@@ -133,4 +133,23 @@ class IndexController extends Controller
 		echo $this->security->removeXss($html);
 		echo $html;
 	}
+
+	public function helperAction()
+	{
+		$helper = $this->helper;
+		$debug = $this->debug;
+		
+		//helper优先级别 系统级->应用级->模块级
+		$debug->dump($helper->getDate('.'));
+		$debug->dump($helper->getDate(''));
+		$debug->dump($helper->getDate());
+
+		$debug->dump($helper->test());
+		$debug->dump($helper->tets2());
+		$debug->dump($helper->test2());
+		$debug->dump($helper->undefined());
+
+		echo "<br>";
+		echo $this->Debug->appMsg();
+	}
 }

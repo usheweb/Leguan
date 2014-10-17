@@ -7,14 +7,15 @@
  * @license   http://www.apache.org/licenses/LICENSE-2.0
  */
 
-namespace App;
+namespace Common\Helper;
 
-class Main
+class Helper
 {
-	public function run()
+	/*
+	 * 帮助方法测试
+	 */
+	public function test()
 	{
-		echo "app run <br>";
-
-		// return false;
+		return 'this is appHelper test';
 	}
 }
