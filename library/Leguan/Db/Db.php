@@ -69,19 +69,37 @@ class Db
 	 * @param $input array 预处理数据
 	 * @return mixed
 	 */
-	public function query($statement,$input = array())
+	public function query($statement, $input = array())
 	{
-		$statement = str_replace("@_", self::$_dbPrefix, $statement);
-		$this->_stmt = self::$_db->prepare($statement);
+		$this->_prepare($statement);
 		$result = $this->_stmt->execute($input);
 
 		if($result === false){
 			return false;
 		}
 
-		self::$_queryNum ++;
-		
 		return $this->_fetchAll();
+	}
+
+	/**
+	 * 执行一条update语句
+	 */
+	public function exec($statement, $input = array())
+	{
+		$this->_prepare($statement);
+		return $this->_stmt->execute($input);
+	}
+
+	/**
+	 * 执行一条预处理语句
+	 */
+	private function _prepare($statement)
+	{
+		$statement = str_replace("@_", self::$_dbPrefix, $statement);
+		$this->_stmt = self::$_db->prepare($statement);
+
+		//记录查询次数
+		self::$_queryNum ++;
 	}
 
 	/**
@@ -90,6 +108,30 @@ class Db
 	public function getLastInsertId()
 	{
 		return self::$_db->lastInsertId();
+	}
+
+	/**
+	 * 开启事务
+	 */
+	public function beginTransaction()
+	{
+		return self::$_db->beginTransaction();
+	}
+
+	/**
+	 * 事务回滚
+	 */
+	public function rollBack()
+	{
+		return self::$_db->rollBack();
+	}
+
+	/**
+	 * 提交事务
+	 */
+	public function commit()
+	{
+		return self::$_db->commit();
 	}
 
 	/**

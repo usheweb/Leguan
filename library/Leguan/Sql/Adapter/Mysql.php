@@ -115,7 +115,7 @@ use Leguan\Bootstrap\Leguan;
 
  		$result = $sql;
  		if ($isQuery) {
- 			$result = $this->_db->query($sql, $this->_input);
+ 			$result = $this->_db->exec($sql, $this->_input);
  		}
  		$this->_init();
 
@@ -171,7 +171,7 @@ use Leguan\Bootstrap\Leguan;
 
  		$result = $sql;
  		if ($isQuery) {
- 			$result = $this->_db->query($sql, $this->_input);
+ 			$result = $this->_db->exec($sql, $this->_input);
  		}
  		$this->_init();
 
@@ -200,7 +200,7 @@ use Leguan\Bootstrap\Leguan;
 
  		$result = $sql;
  		if ($isQuery) {
- 			$result = $this->_db->query($sql, $this->_input);
+ 			$result = $this->_db->exec($sql, $this->_input);
  		}
  		$this->_init();
 
