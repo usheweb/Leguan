@@ -34,7 +34,7 @@ class IndexController extends Controller
 		echo $this->Debug->getQueryNum();
 	}
 
-	public function sql2Action()
+	public function sqlAction()
 	{
 		$values = array("title"=>"new 'title",'description' => 'test');
 		$table = 'article';
@@ -103,7 +103,7 @@ class IndexController extends Controller
 		$this->log->write('test log');
 	}
 
-	public function reqAction()
+	public function requestAction()
 	{
 		$request = $this->request;
 		$debug = $this->debug;

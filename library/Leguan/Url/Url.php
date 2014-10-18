@@ -206,12 +206,16 @@ class Url
 	{
 		$config = Leguan::get('config');
 		$urlExtension = $config->urlExtension;
+		$urlExtensionLen = strlen($urlExtension);
 		$urlLimiter = $config->urlLimiter;
 
 		$path = trim($path);
 		$path = trim($path,'/');
-		$path = trim($path,$urlLimiter);
-		$path = rtrim($path,$urlExtension);
+		//存在扩展名 就去除
+		if (substr($path, -$urlExtensionLen) == $urlExtension) {
+			$path = substr($path, 0, -$urlExtensionLen);
+		}
+
 		if (empty($path)) {
 			$pathArr = array();
 		} else {

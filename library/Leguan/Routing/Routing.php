@@ -68,27 +68,74 @@ class Routing
 		//执行应用级别和模块级别初始化代码
 		$init = array('Common', $url->m);
 		foreach ($init as $value) {
-			$init = "\\{$value}\\Main";
-			$init = new $init();
-			
-			if ($init->run() === false) {
-				exit;
+			$initFile = array(
+				$path->app, 
+				$value, 
+				'Main.php');
+			$initFile = implode($path->ds, $initFile);
+
+			if (file_exists($initFile)) {
+				$init = "\\{$value}\\Main";
+				$init = new $init();
+				
+				if ($init->run() === false) {
+					exit;
+				}
 			}
 		}
 
 		//加载控制器
-		$controllerName = "\\{$url->m}\\Controller\\{$url->c}Controller";
+		$controllerFile = array(
+			$path->app, 
+			$url->m, 
+			'Controller', 
+			"{$url->c}Controller.php");
+		$controllerFile = implode($path->ds, $controllerFile);
 
-		$controller = new $controllerName();
-		$actionName = "{$url->a}Action";
+		//判断控制器是否存在
+		if (file_exists($controllerFile)) {
+			$controllerName = "\\{$url->m}\\Controller\\{$url->c}Controller";
+			$controller = new $controllerName();
+			$actionName = "{$url->a}Action";
+			$defaultAction = 'defaultAction';
 
-		$defaultAction = 'defaultAction';
-		if (is_callable(array($controller, $actionName))) {
-			$controller->$actionName();
-		} elseif (is_callable(array($controller, $defaultAction))) {
-			$controller->$defaultAction();
+			if (is_callable(array($controller, $actionName))) {
+				$controller->$actionName();
+
+			//调用控制器下的默认方法
+			} elseif (is_callable(array($controller, $defaultAction))) {
+				$controller->$defaultAction();
+			} else {
+				$this->defaultAction($controllerName, $actionName);
+			}
+
+		//加载默认控制器
 		} else {
-			$this->defaultAction($controllerName, $actionName);
+			$defaultControllerFile = array(
+				$path->app, 
+				$url->m, 
+				'Controller', 
+				'DefaultController.php');
+			$defaultControllerFile = implode($path->ds, $defaultControllerFile);
+
+			if (file_exists($defaultControllerFile)) {
+				$controllerName = "\\{$url->m}\\Controller\\DefaultController";
+				$controller = new $controllerName();
+				$defaultAction = 'defaultAction';
+
+				if (is_callable(array($controller, $defaultAction))) {
+					$controller->$defaultAction();
+				} else {
+					$this->defaultAction($controllerName, $defaultAction);
+				}
+
+			//默认控制器 不存在
+			} else {
+				$controllerFile = str_replace($path->app, '', $controllerFile);
+				$defaultControllerFile = str_replace($path->app, '', $defaultControllerFile);
+
+				exit("没有找到控制器文件<br> {$controllerFile} <br> 也没有找到默认控制器文件<br> {$defaultControllerFile}");
+			}
 		}
 		
 	}
