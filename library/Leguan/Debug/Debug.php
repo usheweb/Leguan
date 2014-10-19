@@ -122,4 +122,11 @@ class Debug
 		return $db->getQueryNum();
 	}
 
+	/**
+	 * 返回高亮显示PHP代码
+	 */
+	public function getCode($code)
+	{
+		return highlight_string($code, true);
+	}
 }

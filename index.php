@@ -10,5 +10,5 @@
 define('IS_DEBUG', true);
 define('APP_NAME', 'appliction');
 
-require "library\Leguan\Bootstrap\Start.php";
+require dirname(__FILE__)."/library/Leguan/Bootstrap/Start.php";
 \Leguan\Bootstrap\Start::run();
