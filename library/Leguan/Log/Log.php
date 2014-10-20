@@ -25,8 +25,8 @@ class Log implements ILog
 		$dirName = dirname($fileName);
 
 		if(!file_exists($dirName) && 
-			   !mkdir($dirName, 0, true)){
-				    die('创建目录失败 {$cacheDir}');
+			   !mkdir($dirName, 0777, true)){
+				    die("创建目录失败 {$cacheDir}");
 		}
 
 		$handle = fopen($fileName, 'w');

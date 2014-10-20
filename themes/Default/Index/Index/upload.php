@@ -6,8 +6,8 @@
 	<title>文件上传测试</title>	
 </head>
 <body>
-	<form action="<!--{=$this->url->getUrl('index/index/doUpload')}-->" method="post" enctype ="multipart/form-data">
-		<!--{!$upload->getFormMaxSize()}-->
+	<form action="<!-- {=$this->url->getUrl('index/index/doUpload')} -->" method="post" enctype ="multipart/form-data">
+		<!-- {!$upload->getFormMaxSize()} -->
 		<input name="file" type="file" /> <br>
 		<!-- <input name="file[]" type="file" /> <br>
 		<input name="file[]" type="file" /> <br>

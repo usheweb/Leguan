@@ -147,7 +147,7 @@
         $realPath = implode($path->ds, $realPath);
         //判断目录是否存在
         if (!file_exists($realPath)) {
-        	mkdir($realPath, 0, true);
+        	mkdir($realPath, 0777, true);
         }
 
         $fileName = md5_file($tmp_name).".{$extension}";

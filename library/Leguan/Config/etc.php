@@ -33,11 +33,11 @@
  		//默认方法
  		'defaultAction' => 'Index',
  		//默认模板主题
- 		'theme' => 'Default',
+ 		'theme' => 'default',
  		//模板扩展名
  		'viewExtension' => '.php',
  		//模板分割符
- 		'viewLimiter' => array('<!--{','}-->'),
+ 		'viewLimiter' => array('<!-- {','} -->'),
  		//模板输出转义函数
  		'viewEscape' => 'htmlspecialchars',
  		//url扩展

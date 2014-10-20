@@ -45,8 +45,8 @@ class View extends LeguanLoder
 			$cacheDir = dirname($cache);
 
 			if(!file_exists($cacheDir) && 
-			   !mkdir($cacheDir, 0, true)){
-				    die('创建目录失败 {$cacheDir}');
+			   !mkdir($cacheDir, 0777, true)){
+				    die("创建目录失败 {$cacheDir}");
 			}
 
 			file_put_contents($cache, $this->getContent($path));
@@ -113,9 +113,9 @@ class View extends LeguanLoder
 		count($path) == 1 && array_unshift($path, $url->c);
 		count($path) == 2 && array_unshift($path, $url->m);
 
-		$a = ucwords(array_pop($path));
-		$c = ucwords(array_pop($path));
-		$m = ucwords(array_pop($path));
+		$a = strtolower(array_pop($path));
+		$c = strtolower(array_pop($path));
+		$m = strtolower(array_pop($path));
 
 		$path = $this->path;
 		$config = $this->config;
@@ -139,7 +139,7 @@ class View extends LeguanLoder
 		$path = $this->path;
 		$config = $this->config;
 
-		return $path->view. $path->ds . $config->theme . $path->ds . 'Skin';
+		return $path->view. $path->ds . $config->theme . $path->ds . 'skin';
 	}
 
 	/**

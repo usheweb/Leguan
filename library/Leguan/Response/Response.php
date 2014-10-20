@@ -64,7 +64,7 @@ class Response
 	 * @param string $msg 重定向前的提示信息
 	 * @return void
 	 */
-	function redirect($url, $time=0, $isHeader=true, $msg='')
+	public function redirect($url, $time=0, $isHeader=true, $msg='')
 	{
 		$this->sendHttpStatus(301);
 
@@ -96,7 +96,7 @@ class Response
 	 * @param integer $code 状态码
 	 * @return void
 	 */
-	function sendHttpStatus($code)
+	public function sendHttpStatus($code)
 	{
 	    static $_status = array(
 	            // Informational 1xx
@@ -153,6 +153,17 @@ class Response
 	        // 确保FastCGI模式下正常
 	        header('Status:'.$code.' '.$_status[$code]);
 	    }
+	}
+
+	/**
+	 * 把数组以json的格式输出到浏览器
+	 *
+	 * @param $data array 带输出的数组
+	 */
+	public function ajaxJson($data)
+	{
+		header('Content-Type:application/json; charset=utf-8');
+        exit(json_encode($data));
 	}
 
 }

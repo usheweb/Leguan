@@ -53,8 +53,8 @@ class File implements ICache
 		$fileName = $path->dataCache . $path->ds . "{$name}.php";
 
 		if(!file_exists($path->dataCache) && 
-			   !mkdir($path->dataCache, 0, true)){
-				    die('创建目录失败 {$cacheDir}');
+			   !mkdir($path->dataCache, 0777, true)){
+				    die("创建目录失败 {$cacheDir}");
 		}
 
 		$data = "<?php

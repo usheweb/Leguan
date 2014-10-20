@@ -45,6 +45,14 @@
 	}
 
 	/**
+	 * 多次md5加密
+	 */
+	public function md5($data)
+	{
+		return md5(md5($data . "leguan") . sha1($data . "Framework"));
+	}
+
+	/**
 	 * 过滤xss攻击代码
 	 *
 	 * @link http://www.nowamagic.net/librarys/veda/detail/2353

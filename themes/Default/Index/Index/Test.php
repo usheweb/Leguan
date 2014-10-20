@@ -1,1 +1,1 @@
-<p>include test for <!--{=$author}--></p>
+<p>include test for <!-- {=$author} --></p>

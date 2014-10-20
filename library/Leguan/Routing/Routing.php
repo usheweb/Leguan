@@ -96,11 +96,29 @@ class Routing
 		if (file_exists($controllerFile)) {
 			$controllerName = "\\{$url->m}\\Controller\\{$url->c}Controller";
 			$controller = new $controllerName();
-			$actionName = "{$url->a}Action";
 			$defaultAction = 'defaultAction';
+			$actionName = "{$url->a}Action";
+
+			//实现rest功能
+			$parentClass = get_parent_class($controller);
+			$parentClass = end(explode('\\', $parentClass));
+			$isRest = false;
+			
+			if ($parentClass === 'RestController') {
+				$request = Leguan::get('request');
+				$method = strtolower($request->getMethod());
+				$actionName = $method . ucwords($url->a) . 'Action';
+
+				$isRest = true;
+			}
 
 			if (is_callable(array($controller, $actionName))) {
-				$controller->$actionName();
+				$result = $controller->$actionName();
+
+				if ($isRest && !empty($result)) {
+					$response = Leguan::get('response');
+					$response->ajaxJson($result);
+				}
 
 			//调用控制器下的默认方法
 			} elseif (is_callable(array($controller, $defaultAction))) {

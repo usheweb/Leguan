@@ -21,7 +21,7 @@ class Request
 	 */
 	public function isPost()
 	{
-		return $this->getRequestMethod() == 'POST';
+		return $this->getMethod() == 'POST';
 	}
 
 	/**
@@ -29,7 +29,7 @@ class Request
 	 */
 	public function isGet()
 	{
-		return $this->getRequestMethod() == 'GET';
+		return $this->getMethod() == 'GET';
 	}
 
 	/**
@@ -37,7 +37,7 @@ class Request
 	 */
 	public function isPut()
 	{
-		return $this->getRequestMethod() == 'PUT';
+		return $this->getMethod() == 'PUT';
 	}
 
 	/**
@@ -45,13 +45,13 @@ class Request
 	 */
 	public function isDelete()
 	{
-		return $this->getRequestMethod() == 'DELETE';
+		return $this->getMethod() == 'DELETE';
 	}
 
 	/**
 	 * 获取请求类型
 	 */
-	public function getRequestMethod()
+	public function getMethod()
 	{
 		return $_SERVER['REQUEST_METHOD'];
 	}
