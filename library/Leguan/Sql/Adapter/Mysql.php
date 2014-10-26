@@ -313,11 +313,12 @@ use Leguan\Bootstrap\Leguan;
 	 			}
  			}
 
- 			$where .= " {$condition} {$this->_escape[0]}". $this->filter($key) ."{$this->_escape[1]} {$operator} {$placeholder}";
- 		}
+ 			if (!empty($where)) {
+ 				$where .= " {$condition}";
+ 			}
 
- 		$where = ltrim($where, ' and ');
- 		$where = ltrim($where, ' or ');
+ 			$where .= " {$this->_escape[0]}". $this->filter($key) ."{$this->_escape[1]} {$operator} {$placeholder}";
+ 		}
 
  		return $where;
  	}
